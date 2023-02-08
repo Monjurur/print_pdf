@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -59,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text("Printing"),
       ),
-      body: Center(
+      body:  Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -79,9 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
+      )
     );
   }
+
+
+
+
+
 
   /// create PDF & print it
   void _createPdf() async {
@@ -105,6 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ); // Page
 
+
+
     /*doc.addPage(pw.Page(
         build: (pw.Context context) {
           return pw.Center(
@@ -113,17 +118,361 @@ class _MyHomePageState extends State<MyHomePage> {
         }));*/
 
     /// print the document using the iOS or Android print service:
-    await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => doc.save());
+    //await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => doc.save());
 
-    /// share the document to other applications:
-    // await Printing.sharePdf(bytes: await doc.save(), filename: 'my-document.pdf');
+  await  Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => await Printing.convertHtml(
+          format: format,
+          html:  """
+           <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./main.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header style="text-align: center; margin-inline: auto; width: 800px">
+      <h1 style="margin-bottom: 5px">HYPOS</h1>
+      <div class="address">
+        <p style="margin-block: 0px">Sector-7, Uttara, Dhaka</p>
+        <p style="margin-block: 0px">Phone: 01700000000</p>
+      </div>
+      <h3 style="margin-bottom: 0px; margin-top: 12px; line-height: 2px">
+        <span>BIN NO:</span> 894903247123120
+      </h3>
+      <p
+        style="
+          margin-bottom: 0px;
+          margin-top: 24px;
+          text-align: left;
+          margin-left: 0px;
+        "
+      >
+        <strong>Served By:</strong><span> Mamun</span>
+      </p>
+      <div style="display: flex; justify-content: end; line-height: 2px">
+        <p style="margin-right: 10px; margin-top: 14px">
+          <strong>Date:</strong><span> 05/11/2022</span>
+        </p>
+        <p style="margin-top: 14px">
+          <strong>Time:</strong><span> 12:05</span>
+        </p>
+      </div>
+      <h3 style="text-align: left; line-height: 0px; margin-top: 0px">
+        <span>Invoice No:</span> POS#231241412
+      </h3>
+    </header>
+   
+    <table
+      style="
+        margin-inline: auto;
+        font-size: 12px;
+        width: 800px;
+        border: 1px solid #000;
+        border-collapse: collapse;
+      "
+    >
+      <tr>
+        <th
+          style="
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding: 5px;
+            text-align: left;
+          "
+        >
+          Products
+        </th>
+        <th
+          style="
+            color: #000;
+            border-bottom: 2px solid #000;
+            text-align: right;
+            padding: 3px;
+          "
+        >
+          Qty
+        </th>
+        <th
+          style="
+            color: #000;
+            border-bottom: 2px solid #000;
+            text-align: right;
+            padding: 3px;
+          "
+        >
+          Rate
+        </th>
+        <th
+          style="
+            color: #000;
+            border-bottom: 2px solid #000;
+            text-align: right;
+            padding: 3px;
+          "
+        >
+          Amount
+        </th>
+      </tr>
+      <tr>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+          "
+          class="product-title"
+          colspan="1"
+        >
+          <strong>Rosemco - Katla Fish Big Size - 2000 g</strong>
+          <p style="line-height: 0px">
+            <span>S/N: PRD049534535252</small>
+            <span>&nbsp;&nbsp;ExpDate: 23/12/2023</small>
+          </p>
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+        >
+          1.00
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+        >
+          300.00
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+        >
+          300.00
+        </td>
+      </tr>
+      
+      <tr>
+        <td
+          style="
+            border-block: 1px solid gray;
+            border-right: 1px solid gray;
+            text-align: right;
+            color: #000;
+          "
+          colspan="2"
+        >
+          <strong>Total:</strong>
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+          colspan="2"
+          class=""
+        >
+          <strong>657.80</strong>
+        </td>
+      </tr>
 
-    /// tutorial for using path_provider: https://www.youtube.com/watch?v=fJtFDrjEvE8
-    /// save PDF with Flutter library "path_provider":
-    // final output = await getTemporaryDirectory();
-    // final file = File('${output.path}/example.pdf');
-    // await file.writeAsBytes(await doc.save());
+      <tr>
+        <td
+          colspan="2"
+          style="
+            border-block: 1px solid gray;
+            border-right: 1px solid gray;
+            text-align: right;
+            color: #000;
+          "
+          colspan="2"
+        >
+          Total VAT %:
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+          colspan="2"
+        >
+          5.77
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            border-block: 1px solid gray;
+            border-right: 1px solid gray;
+            text-align: right;
+            color: #000;
+          "
+          colspan="2"
+        >
+          <strong>Total Discount:</strong>
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+          colspan="2"
+        >
+          <strong>50.04</strong>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            border-block: 1px solid gray;
+            border-right: 1px solid gray;
+            text-align: right;
+            color: #000;
+          "
+          colspan="2"
+        >
+          <strong>Net Amount:</strong>
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+          colspan="2"
+        >
+          <strong>9,481.00</strong>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            border-block: 1px solid gray;
+            border-right: 1px solid gray;
+            text-align: right;
+            color: #000;
+          "
+          colspan="2"
+        >
+          Pay Type:
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+          colspan="2"
+        >
+          Card
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+          "
+          colspan="4"
+        >
+          In Words: Nine Thousand Four hundred Eight One and Seventy One Paisa
+          Only
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            border-block: 1px solid gray;
+            border-right: 1px solid gray;
+            text-align: right;
+            color: #000;
+          "
+          colspan="2"
+        >
+          Paid Amount:
+        </td>
+        <td
+          style="
+            border-bottom: 1px solid gray;
+            padding: 3px;
+            box-sizing: border-box;
+            text-align: right;
+          "
+          colspan="2"
+        >
+          <strong> 9,824.00</strong>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            border-top: 1px solid gray;
+            border-right: 1px solid gray;
+            text-align: right;
+            color: #000;
+          "
+          colspan="2"
+        >
+          Change Amount:
+        </td>
+        <td
+          style="padding: 3px; box-sizing: border-box; text-align: right"
+          colspan="2"
+        >
+          <strong> 0.00</strong>
+        </td>
+      </tr>
+    </table>
+    <footer style="width: 800px; margin-inline: auto">
+      <h4 style="line-height: 2px">
+        Get Free Home Delivery
+        <span style="font-size: 12px">(masalaBazaar.com.bd)</span>
+      </h4>
+
+      <h3 style="line-height: 2px">
+        <span>Tel:</span> 89088899, <span>Mobile:</span> 01777777777
+      </h3>
+
+      <p style="margin-bottom: 0px">
+        <strong>Note:</strong> Purchases Of Defected Item Must be Exchanged By
+        72 Hour With Invoice.
+      </p>
+
+      <p style="text-align: left; line-height: 0px; margin-top: 10px">
+        <small>(Condition Applicable)</small>
+      </p>
+    </footer>
+  </body>
+</html>
+            """,
+        ));
   }
+
+
+
 
   /// display a pdf document.
   void _displayPdf() {
